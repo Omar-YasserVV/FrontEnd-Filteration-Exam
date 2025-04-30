@@ -1,0 +1,84 @@
+✅ Question 6 – React & JavaScript Conceptual Tasks
+
+1. useMemo Hook Dependency Issue (Fix):
+------------------------------------------------
+const doubledNumbers = useMemo(() => numbers.map(n => n * 2), [numbers]);
+
+2. Pure vs Impure Functions:
+------------------------------------------------
+// Pure Function
+const add = (a, b) => a + b;
+
+// Impure Function
+let total = 0;
+const addToTotal = (num) => { total += num; };
+
+// Pure functions are predictable and easier to test and debug in React.
+
+3. useRef to Implement Dropdown Menu:
+------------------------------------------------
+import React, { useRef, useState, useEffect } from 'react';
+
+function Dropdown() {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div ref={dropdownRef}>
+      <button onClick={() => setIsOpen(!isOpen)}>Toggle Dropdown</button>
+      {isOpen && <div className="dropdown-content">Dropdown Content</div>}
+    </div>
+  );
+}
+
+4. Class Component Lifecycle Methods Example:
+------------------------------------------------
+class ExampleComponent extends React.Component {
+  componentDidMount() {
+    console.log('Component mounted');
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.id !== prevProps.id) {
+      console.log('ID changed');
+    }
+  }
+
+  componentWillUnmount() {
+    console.log('Component will unmount');
+  }
+
+  render() {
+    return <div>Lifecycle Example</div>;
+  }
+}
+
+5. Closure Explanation and Output:
+------------------------------------------------
+var a = 1;
+
+function someFunction(number) {
+  function otherFunction(input) {
+    return a;
+  }
+
+  a = 5;
+  return otherFunction;
+}
+
+const firstResult = someFunction(19);
+const result = firstResult(12);
+
+console.log(result); // Output: 5
+
+// Explanation: `otherFunction` closes over variable `a`, which was updated to 5.
